@@ -9,17 +9,13 @@ from bs4 import BeautifulSoup
 
 
 driver = webdriver.Firefox()
-driver.get('https://bestchoiceproducts.com/pages/careers')
+driver.get('https://www.usajobs.gov')
 
-content = driver.find_element(By.CSS_SELECTOR, '.m-auto')
-content.click()
+jobsearch = driver.find_element(By.ID, 'nav-keyword')
+jobsearch.send_keys("IT")
+jobsearch.send_keys(Keys.RETURN)
 
 driver.implicitly_wait(10)
-
-view_all = driver.find_element(By.CSS_SELECTOR, '#recruitment_careerCenter_showAllJobs')
-view_all.click()
-
-driver.implicitly_wait(30)
 
 url = driver.current_url
 html = requests.get(url)
@@ -27,8 +23,8 @@ s = BeautifulSoup(html.content, 'html.parser')
 
 print(s)
 
-# results = s.find(class_='current-opening-list')
-# job_title = results.find_all('div', class_='current-opening-title')
+# results = s.find(id='usajob-search-results')
+# job_title = results.find_all('a', class_='usajobs-search-result--core__title search-joa-link')
 
 # print(job_title[0].text)
 
